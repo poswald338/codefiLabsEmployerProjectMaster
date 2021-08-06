@@ -1,0 +1,19 @@
+.bottom {
+    position: absolute;
+    top: 225px;
+    left: 0;
+    z-index: 3;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.71);
+        height: 60px;
+        width: 60px;
+        font-size: large;
+        font-weight: bold;
+        border-radius: 50%;
+}
+
+.bottom2 {
+    position: absolute;
+    top: 225px;
+    left: 0;
+    z-index: 3;
+}
