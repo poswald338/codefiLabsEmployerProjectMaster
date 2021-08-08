@@ -9,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ChatModalComponent implements OnInit {
   chatForm: FormGroup;
-  
+  messages: []
 
   constructor(public activeModal: NgbActiveModal) { }
 
