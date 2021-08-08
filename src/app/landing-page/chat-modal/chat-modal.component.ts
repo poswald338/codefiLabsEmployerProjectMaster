@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,10 +8,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./chat-modal.component.scss']
 })
 export class ChatModalComponent implements OnInit {
+  chatForm: FormGroup;
+  
 
   constructor(public activeModal: NgbActiveModal) { }
+
+  session = false
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    this.session = true
+  }
 }
