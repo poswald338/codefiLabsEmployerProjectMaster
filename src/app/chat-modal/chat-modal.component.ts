@@ -13,11 +13,24 @@ export class ChatModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public chatService: ChatServiceService) { }
 
+    session = false
+    data;
+    id = 12
+
   ngOnInit(): void {
   }
 
   onGetMessages() {
+    //data = form data
     this.chatService.createSession();
   }
 
+  onCloseModal() {
+    this.chatService.endSession();
+  }
+
+  onSetStorage() {
+    localStorage.setItem('session_id', JSON.stringify(this.id));
+    debugger;
+  }
 }

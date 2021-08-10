@@ -4,6 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
-  
+  production: false,
+  apiUrl: 'https://codelabs-slack-chat.herokuapp.com/api/v1/messages/',
+  apiKey: 'HALUAH08houahs08208hodnoun08n08n08n02naufnaofuna08'
+
 };

@@ -1,5 +1,6 @@
 .modal-header {
     background-color: white;
+    border-bottom: 1px solid black;
 }
 
 .modal-body {
@@ -8,4 +9,9 @@
 
 .modal-footer {
     background-color: white;
+}
+
+.modal-title {
+    text-align: center;
+    justify-content: center;
 }
