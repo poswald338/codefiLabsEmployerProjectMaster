@@ -34,12 +34,10 @@ export class ChatServiceService {
       message: "hi"
     }).pipe(tap(response => {
       response.payload[0].session_id
-      localStorage.setItem('session_id', response.payload[0].session_id)
-      debugger;
+      localStorage.setItem('session_id', response.payload[0].session_id);
     }
     )).subscribe(response => {
       console.log(response);
-      console.log(response.session_id)
       // this.id = response.session_id;
     })
   }
@@ -82,6 +80,10 @@ export class ChatServiceService {
     }).subscribe(response => {
       console.log(response)
     })
+  }
+
+  getMesssages() {
+
   }
 
 }
