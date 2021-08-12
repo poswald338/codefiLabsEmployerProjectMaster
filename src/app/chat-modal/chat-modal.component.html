@@ -5,8 +5,13 @@
     </button>
   </div>
   <div class="modal-body">
-    <p *ngIf="!session">Hello</p>
-    <p *ngIf="session">Goodbye</p>
+    <ul class="scroll">
+      <app-message 
+      *ngFor="let message of chatMessages"
+      [name]="message[0].user"
+      [text]="message[0].text"
+      [timestamp]="message[0].timestamp"></app-message>
+    </ul>
     <button (click)="onGetMessages()">Get</button>
   </div>
   <div class="modal-footer">

@@ -5,6 +5,6 @@ export class Message {
         public user: string,
         public session_id: number
     ) {
-
+        
     }
 }

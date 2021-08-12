@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { environment } from 'environments/environment';
 import { tap } from 'rxjs/operators'
+import { Subject } from 'rxjs';
 
 
 export interface SessionResponse {
@@ -22,39 +23,52 @@ export class ChatServiceService {
   ) {}
 
   messages: Message[] = []
+  messagesChanged = new Subject<Message[]>()
   url = `${environment.apiUrl}`
   key = `${environment.apiKey}`
+  name = 'John'
   id;
 
 // 'data' will be the information from form
   createSession() {
     return this.http.post<any>(this.url+'new_session?token='+this.key, {
       //data.name and data.message will carry over from form
-      name: "john",
+      name: "John",
       message: "hi"
     }).pipe(tap(response => {
-      response.payload[0].session_id
+      this.id = response.payload[0].session_id
       localStorage.setItem('session_id', response.payload[0].session_id);
     }
     )).subscribe(response => {
       console.log(response);
-      // this.id = response.session_id;
     })
   }
 
-  getMessages() {
+  getMessages(id) {
     //session_id to be replaced with key set in storage
-    let id = localStorage.getItem('session_id');
+    // let id = localStorage.getItem('session_id');
 
-    return this.http.get(this.url+'retrieve_messages?token='+this.key, {
+    return this.http.get<any>(this.url+'retrieve_messages?token='+this.key, {
       params: {
         token: this.key,
         session_id: id
       }
-    })
-    .subscribe(response => {                
-      console.log(response);
-    })
+    }).pipe(tap(response => {debugger
+      if(response.payload[0][0].user === 'web') {
+        response.payload[0][0].user = this.name
+      } else if(response.payload[0][0].user === 'slack') {
+        response.payload[0][0].user = 'Patrick'
+      }
+    }
+    )).subscribe((messages: any) => {debugger
+      if (messages.payload.length === this.messages.length) {
+        return this.messages
+      } else {
+        this.messages = messages.payload;
+        this.messagesChanged.next(this.messages.slice())        
+      }
+        console.log(this.messages);    
+      })
   }
 
   newMessage() {
@@ -81,9 +95,4 @@ export class ChatServiceService {
       console.log(response)
     })
   }
-
-  getMesssages() {
-
-  }
-
 }
