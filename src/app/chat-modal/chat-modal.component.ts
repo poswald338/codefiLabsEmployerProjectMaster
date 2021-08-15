@@ -14,7 +14,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
   constructor(
     public activeModal: NgbActiveModal,
     public chatService: ChatServiceService) { }
-
+    private messageSub: Subscription
     private subs = new Subscription;
     chatMessages: Message[] = []
     session = false
@@ -33,13 +33,18 @@ export class ChatModalComponent implements OnInit, OnDestroy {
   onSubmit() {
 
   }
+//add method inside ngOnChanges
+  startPolling() {
+    if (this.id) {
+      setInterval(() => { this.messageSub.unsubscribe(), this.onGetMessages }, 5000)
+    }
+  }
 
   
 
   onGetMessages() {
-    this.subs.add(
-      this.chatService.getMessages(this.id)
-    )
+   this.messageSub = this.chatService.getMessages(this.id)
+   debugger
   }
 
   onCloseModal() {

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { environment } from 'environments/environment';
 import { tap } from 'rxjs/operators'
 import { Subject } from 'rxjs';
+import { Session } from 'inspector';
 
 
 export interface SessionResponse {
@@ -84,15 +85,15 @@ export class ChatServiceService {
     })
   }
 
-  endSession() {
-    localStorage.removeItem('session_id');
-    return this.http.delete(this.url+'end_session', {
-      params: {
-        token: this.key,
-        session_id: this.id
-      }
-    }).subscribe(response => {
-      console.log(response)
-    })
-  }
+  // endSession() {
+  //   localStorage.removeItem('session_id');
+  //   return this.http.delete(this.url+'end_session', {
+  //     params: {
+  //       token: this.key,
+  //       session_id: this.id
+  //     }
+  //   }).subscribe(response => {
+  //     console.log(response)
+  //   })
+  // }
 }
