@@ -17,15 +17,27 @@
 
 <div class="modal-body" *ngIf=!session> 
   
-  <form>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     
     <div class="form-group">
       <label for="name">Your Name</label>
-      <input type="text" class="form-control" id="name" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        required
+        ngModel
+        name="name">
     </div>
     <div class="form-group">
       <label for="message">Please Type Your Message</label>
-      <input type="text" class="form-control" id="message" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="message" 
+        required
+        ngModel
+        name="message">
     </div>
     <button type="submit" class="btn btn-info" (click)="onSubmit" >Submit</button>
  
@@ -35,7 +47,6 @@
 <div class="modal-body" *ngIf=session> 
   <form>
     <div class="form-group">
-    <!-- *ngFor="let..."-->
     </div>
     <div class="form-group">
       <label for="message">Please Type Your Message</label>
@@ -65,7 +76,9 @@
   </button> -->
   <div class="modal-body" *ngIf=!session> 
     <p>Hello</p>
-    <form>
+  
+    <!-- Kimberly's form code below. Will probably delete later... -->
+    <!-- <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <label for="name">Your Name</label>
         <input type="text" class="form-control" id="name">
@@ -74,25 +87,25 @@
         <label for="message">Please Type Your Message</label>
         <input type="text" class="form-control" id="messaage">
       </div>
-      <button type="submit" class="btn btn-info" (click)="onSubmit">Submit</button>
-    </form>
-  </div>
+      <button type="submit" class="btn btn-info" >Submit</button>
+    </form> -->
+
+  <!-- </div>
   <div class="modal-body" *ngIf=session> 
     <form>
       <div class="form-group">
-      <!-- *ngFor="let..."-->
       </div>
       <div class="form-group">
         <label for="message">Please Type Your Message</label>
         <input type="text" class="form-control" id="messaage">
       </div>
-      <button type="submit" class="btn btn-info" (click)="onSubmit">Submit</button>
+      <button type="submit" class="btn btn-info" >Submit</button>
     </form>
-  </div>
+  </div> -->
 
-  <div class="modal-footer">
+  <!-- <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-  </div>
+  </div> -->
 
   <!-- <form>
     <div class="form-group">
