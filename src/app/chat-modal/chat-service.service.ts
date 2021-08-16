@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { environment } from 'environments/environment';
 import { tap } from 'rxjs/operators'
 import { Subject } from 'rxjs';
-import { Session } from 'inspector';
 
 
 export interface SessionResponse {
@@ -31,11 +30,11 @@ export class ChatServiceService {
   id;
 
 // 'data' will be the information from form
-  createSession() {
+  createSession(name, message) {
     return this.http.post<any>(this.url+'new_session?token='+this.key, {
       //data.name and data.message will carry over from form
-      name: "John",
-      message: "hi"
+      name: name,
+      message: message
     }).pipe(tap(response => {
       this.id = response.payload[0].session_id
       localStorage.setItem('session_id', response.payload[0].session_id);
@@ -72,18 +71,18 @@ export class ChatServiceService {
       })
   }
 
-  newMessage() {
-    return this.http.post(this.url+'new_message?token='+this.key, {
-      message: 'Hello, this is John.'
-    }, {
-      params: {
-        token: this.key,
-        session_id: '12'
-      }
-    }).subscribe(response => {
-      console.log(response);
-    })
-  }
+  // newMessage() {
+  //   return this.http.post(this.url+'new_message?token='+this.key, {
+  //     message: 'Hello, this is John.'
+  //   }, {
+  //     params: {
+  //       token: this.key,
+  //       session_id: '12'
+  //     }
+  //   }).subscribe(response => {
+  //     console.log(response);
+  //   })
+  // }
 
   // endSession() {
   //   localStorage.removeItem('session_id');

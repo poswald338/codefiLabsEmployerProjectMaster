@@ -30,8 +30,8 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     )
   }
 
-  onSubmit() {
-
+  onSubmit(name, message) {
+    this.chatService.createSession(name, message)
   }
 //add method inside ngOnChanges
   startPolling() {
@@ -48,7 +48,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
   }
 
   onCloseModal() {
-    this.chatService.endSession();
+    // this.chatService.endSession();
   }
 
   ngOnDestroy() {
