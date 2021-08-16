@@ -39,7 +39,7 @@
         ngModel
         name="message">
     </div>
-    <button type="submit" class="btn btn-info" (click)="onSubmit" >Submit</button>
+    <button type="submit" class="btn btn-info" [disabled]="!f.valid" >Submit</button>
  
   </form>
 </div>
@@ -52,7 +52,7 @@
       <label for="message">Please Type Your Message</label>
       <input type="text" class="form-control" id="message" required>
     </div>
-    <button type="submit" class="btn btn-info" (click)="onSubmit">Submit</button>
+    <button type="submit" class="btn btn-info" >Submit</button>
   </form>
 </div>
 
@@ -74,9 +74,8 @@
   <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button> -->
-  <div class="modal-body" *ngIf=!session> 
-    <p>Hello</p>
-  
+
+      
     <!-- Kimberly's form code below. Will probably delete later... -->
     <!-- <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
