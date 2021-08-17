@@ -1,6 +1,20 @@
 
 
 <div class="modal-header">
+    <h3 class="modal-title">Hi there!</h3>
+    <button type="button" class="close" aria-label="Close" (click)="onCloseModal()" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&minus;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul class="scroll">
+      <app-message 
+      *ngFor="let message of chatMessages"
+      [name]="message[0].user"
+      [text]="message[0].text"
+      [timestamp]="message[0].timestamp"></app-message>
+    </ul>
+    <button (click)="onGetMessages()">Get</button>
   <h4 class="modal-title">Hi there!</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>

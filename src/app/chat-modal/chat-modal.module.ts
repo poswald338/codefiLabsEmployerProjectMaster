@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatModalComponent } from './chat-modal.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MessageComponent } from './message/message.component';
 
 
 
 @NgModule({
   declarations: [
-    ChatModalComponent
+    ChatModalComponent,
+    MessageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   exports: [
     ChatModalComponent

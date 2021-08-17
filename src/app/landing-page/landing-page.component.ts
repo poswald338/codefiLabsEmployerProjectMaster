@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Rellax from 'rellax'
-import { ChatModalComponent } from './chat-modal/chat-modal.component';
+import { ChatModalComponent } from '../chat-modal/chat-modal.component';
 
 @Component({
   selector: 'app-landing-page',
