@@ -37,7 +37,7 @@
         ngModel
         name="message">
     </div>
-    <button type="submit" class="btn btn-info">Submit</button>
+    <button type="submit" class="btn btn-info" [disabled]="!f.valid" >Submit</button>
  
   </form>
 </div>
@@ -55,7 +55,7 @@
         ngModel
         name="message">
     </div>
-    <button type="submit" class="btn btn-info">Submit</button>
+    <button type="submit" class="btn btn-info" >Submit</button>
   </form>
 </div>
 
@@ -80,6 +80,8 @@
   <!-- <div class="modal-body" *ngIf=!session> 
     <p>Hello</p> -->
   
+
+      
     <!-- Kimberly's form code below. Will probably delete later... -->
     <!-- <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
