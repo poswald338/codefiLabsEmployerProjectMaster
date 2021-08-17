@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, FormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,7 +8,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./chat-modal.component.scss']
 })
 export class ChatModalComponent implements OnInit {
-  chatForm: FormGroup;
   messages: []
 
   constructor(public activeModal: NgbActiveModal) { }
@@ -18,9 +17,16 @@ export class ChatModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(form: NgForm) {
+  onSubmitSessionForm(sForm: NgForm) {
+    console.log(sForm)
+    const name = sForm.value.name
+    const message = sForm.value.message
     this.session = true
-    console.log(this.chatForm)
+  }
 
+  onSubmitMessageForm(mForm: NgForm) {
+    console.log(mForm)
+    const message = mForm.value.message
+    this.session=true
   }
 }
