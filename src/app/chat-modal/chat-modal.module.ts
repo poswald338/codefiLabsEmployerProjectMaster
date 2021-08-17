@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatModalComponent } from './chat-modal.component';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { MessageComponent } from './message/message.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -13,6 +14,7 @@ import { MessageComponent } from './message/message.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     HttpClientModule
   ],
   exports: [

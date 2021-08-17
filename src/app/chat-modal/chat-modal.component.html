@@ -6,7 +6,7 @@
       <span aria-hidden="true">&minus;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" *ngIf="session">
     <ul class="scroll">
       <app-message 
       *ngFor="let message of chatMessages"
@@ -15,19 +15,19 @@
       [timestamp]="message[0].timestamp"></app-message>
     </ul>
     <button (click)="onGetMessages()">Get</button>
-  <h4 class="modal-title">Hi there!</h4>
+  <!-- <h4 class="modal-title">Hi there!</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
-  </button>
+  </button> -->
 </div>
 
  <!--Face-->
- <div class="modal-body"> 
+ <div class="modal-body" *ngIf="!session"> 
     <div style="text-align: center;">
   <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" 
        class="rounded-circle center">
     </div>
-<div *ngIf=!session> 
+<div > 
   
   <form (ngSubmit)="onSubmitSessionForm(sf)" #sf="ngForm">
     
@@ -51,13 +51,13 @@
         ngModel
         name="message">
     </div>
-    <button type="submit" class="btn btn-info" [disabled]="!f.valid" >Submit</button>
+    <button type="submit" class="btn btn-info" [disabled]="!sf.valid" >Submit</button>
  
   </form>
 </div>
 </div>
 
-<div *ngIf=session> 
+<div *ngIf="session"> 
   <form (ngSubmit)="onSubmitMessageForm(mf)" #mf="ngForm">
     <div class="form-group">
       <label for="message">Please Type Your Message</label>
