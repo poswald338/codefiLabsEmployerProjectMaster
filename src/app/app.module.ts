@@ -8,6 +8,8 @@ import { LandingPageModule } from './landing-page/landing-page.module';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChatModalModule } from './chat-modal/chat-modal.module';
+
 
 @NgModule({
     declarations: [
@@ -22,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule,
         RouterModule,
         AppRoutingModule,
-        LandingPageModule
+        LandingPageModule,
+        ChatModalModule
     ],
     providers: [],
     bootstrap: [AppComponent]
