@@ -12,6 +12,7 @@ import { LandingPageComponent } from './landing-page.component';
   declarations: [LandingPageComponent],
   imports: [
     CommonModule,
+    FormsModule,
     BrowserModule
   ]
 })

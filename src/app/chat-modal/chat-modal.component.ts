@@ -1,5 +1,7 @@
+
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, NgForm, FormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { interval, Subscription } from 'rxjs';
 import { ChatServiceService } from './chat-service.service';
@@ -21,6 +23,8 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     activeName = 'Patrick';
     data;
     id = 12
+
+  session = false
 
   ngOnInit(): void {
     this.subs.add(
@@ -55,4 +59,16 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
+  onSubmitSessionForm(sForm: NgForm) {
+    console.log(sForm)
+    const name = sForm.value.name
+    const message = sForm.value.message
+    this.session = true
+  }
+
+  onSubmitMessageForm(mForm: NgForm) {
+    console.log(mForm)
+    const message = mForm.value.message
+    this.session=true
+  }
 }
