@@ -71,28 +71,20 @@ export class ChatServiceService {
       })
   }
 
-  // newMessage() {
-  //   return this.http.post(this.url+'new_message?token='+this.key, {
-  //     message: 'Hello, this is John.'
-  //   }, {
-  //     params: {
-  //       token: this.key,
-  //       session_id: '12'
-  //     }
-  //   }).subscribe(response => {
-  //     console.log(response);
-  //   })
-  // }
-
-  // endSession() {
-  //   localStorage.removeItem('session_id');
-  //   return this.http.delete(this.url+'end_session', {
-  //     params: {
-  //       token: this.key,
-  //       session_id: this.id
-  //     }
-  //   }).subscribe(response => {
-  //     console.log(response)
-  //   })
-  // }
+  newMessage(message: string, session_id: any) {
+    return this.http.post(this.url + 'new_message?token=' + this.key, {
+      message: message,
+      session_id: this.id
+      }
+    ).subscribe(data => {
+      console.log(data)
+    })
+  }
+  endSession(session_id: any) {
+    this.http.delete(this.url + 'end_session?token=' + this.key, {
+      params: {
+        session_id: this.id
+      }
+    });
+  }
 }
