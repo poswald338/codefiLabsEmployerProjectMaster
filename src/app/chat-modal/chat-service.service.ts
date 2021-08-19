@@ -27,7 +27,7 @@ export class ChatServiceService {
   url = `${environment.apiUrl}`
   key = `${environment.apiKey}`
   name = 'John'
-  id;
+  id: any;
 
 // 'data' will be the information from form
   createSession(name, message) {
@@ -73,17 +73,17 @@ export class ChatServiceService {
 
   newMessage(message: string, session_id: any) {
     return this.http.post(this.url + 'new_message?token=' + this.key, {
-      message: message,
-      session_id: this.id
+      message: message
       }
     ).subscribe(data => {
       console.log(data)
     })
   }
+
   endSession(session_id: any) {
     this.http.delete(this.url + 'end_session?token=' + this.key, {
       params: {
-        session_id: this.id
+        session_id: session_id
       }
     });
   }

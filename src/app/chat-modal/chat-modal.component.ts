@@ -22,7 +22,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     session = false
     activeName = 'Patrick';
     data;
-    id = 12
+    id = localStorage.getItem('session_id');
 
   ngOnInit(): void {
     this.subs.add(
@@ -32,17 +32,12 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     )
   }
 
-  onSubmit(name, message) {
-    this.chatService.createSession(name, message)
-  }
 //add method inside ngOnChanges
   startPolling() {
     if (this.id) {
       setInterval(() => { this.messageSub.unsubscribe(), this.onGetMessages }, 5000)
     }
   }
-
-  
 
   onGetMessages() {
    this.messageSub = this.chatService.getMessages(this.id)
@@ -62,11 +57,20 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     const name = sForm.value.name
     const message = sForm.value.message
     this.session = true
+    this.chatService.createSession(name, message);
+    setTimeout(() => {this.sessionExpire()}, 10000);
   }
 
   onSubmitMessageForm(mForm: NgForm) {
     console.log(mForm)
     const message = mForm.value.message
-    this.session=true
+    this.session =true
+
+    this.chatService.newMessage(mForm.value.message, this.chatService.id);
+  }
+
+  sessionExpire() {
+    console.log('It worked?');
+    this.chatService.endSession(this.id);
   }
 }
