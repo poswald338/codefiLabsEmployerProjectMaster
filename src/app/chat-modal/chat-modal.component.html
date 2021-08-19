@@ -1,11 +1,14 @@
 
-
+ <div class="modal-overlay" id="modal-overlay"></div>
+   
 <div class="modal-header">
     <h3 class="modal-title">Hi there!</h3>
     <button type="button" class="close" aria-label="Close" (click)="onCloseModal()" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&minus;</span>
     </button>
   </div>
+
+  <!-- Here is for the response message thread -->
   <div class="modal-body" *ngIf="session">
     <ul class="scroll">
       <app-message 
@@ -15,13 +18,36 @@
       [timestamp]="message[0].timestamp"></app-message>
     </ul>
     <button (click)="onGetMessages()">Get</button>
+
+    <div *ngIf="session"> 
+      <form (ngSubmit)="onSubmitMessageForm(mf)" #mf="ngForm">
+        <div class="form-group">
+          <br>
+          <br>
+          <label for="message">Please Type Your Message</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="message" 
+            required
+            ngModel
+            name="message">
+        </div>
+        <button 
+        type="submit" 
+        class="btn btn-info"
+        style="background-color:#c58c8c
+        ; border-color:black; color:white; font-weight: bold;">Submit</button>
+      </form>
+    </div>
   <!-- <h4 class="modal-title">Hi there!</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button> -->
 </div>
 
- <!--Face-->
+<!-- Here is for the initial message submission -->
+ <!--Face Design-->
  <div class="modal-body" *ngIf="!session"> 
     <div style="text-align: center;">
   <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" 
@@ -51,30 +77,26 @@
         ngModel
         name="message">
     </div>
-    <button type="submit" class="btn btn-info" [disabled]="!sf.valid" >Submit</button>
+    
+    <button 
+    type="submit" 
+    class="btn btn-info" 
+    [disabled]="!sf.valid" 
+    style="background-color:#c58c8c; border-color:black; color:white; font-weight: bold;">Submit</button>
  
   </form>
 </div>
 </div>
 
-<div *ngIf="session"> 
-  <form (ngSubmit)="onSubmitMessageForm(mf)" #mf="ngForm">
-    <div class="form-group">
-      <label for="message">Please Type Your Message</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="message" 
-        required
-        ngModel
-        name="message">
-    </div>
-    <button type="submit" class="btn btn-info" >Submit</button>
-  </form>
-</div>
 
+<!-- Here is the footer -->
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <div 
+    style="display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;">
+  <button type="button" class="btn btn-outline-dark " (click)="activeModal.close('Close click')">Close</button></div>
 </div>
 
 
