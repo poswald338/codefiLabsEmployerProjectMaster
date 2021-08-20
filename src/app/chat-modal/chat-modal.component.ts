@@ -41,7 +41,6 @@ export class ChatModalComponent implements OnInit, OnDestroy {
 
   onGetMessages() {
    this.messageSub = this.chatService.getMessages(this.id)
-   debugger
   }
 
   onCloseModal() {
@@ -58,19 +57,22 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     const message = sForm.value.message
     this.session = true
     this.chatService.createSession(name, message);
-    setTimeout(() => {this.sessionExpire()}, 10000);
+    if(this.session) {
+      setTimeout(() => {this.sessionExpire()}, 5000);
+    }
   }
 
   onSubmitMessageForm(mForm: NgForm) {
     console.log(mForm)
     const message = mForm.value.message
     this.session =true
-
-    this.chatService.newMessage(mForm.value.message, this.chatService.id);
+    this.chatService.newMessage(message, localStorage.getItem('session_id'));
   }
 
   sessionExpire() {
-    console.log('It worked?');
-    this.chatService.endSession(this.id);
+    console.log(this.chatService.id);
+    this.session = false;
+    this.chatService.endSession(this.chatService.id);
+    localStorage.removeItem('session_id');
   }
 }

@@ -73,18 +73,20 @@ export class ChatServiceService {
 
   newMessage(message: string, session_id: any) {
     return this.http.post(this.url + 'new_message?token=' + this.key, {
-      message: message
-      }
-    ).subscribe(data => {
+      message: message,
+      session_id: localStorage.getItem('session_id')
+      }).subscribe(data => {
       console.log(data)
-    })
+    });
   }
 
   endSession(session_id: any) {
-    this.http.delete(this.url + 'end_session?token=' + this.key, {
+    this.http.delete(this.url + 'end_session?token=' + this.key,{
       params: {
         session_id: session_id
       }
-    });
+    }).subscribe(data => {
+      console.log(data);
+    })
   }
 }
