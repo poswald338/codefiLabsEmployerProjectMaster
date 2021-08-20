@@ -58,7 +58,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     this.session = true
     this.chatService.createSession(name, message);
     if(this.session) {
-      setTimeout(() => {this.sessionExpire()}, 5000);
+      setTimeout(() => {this.sessionExpire()}, 10000);
     }
   }
 
@@ -67,6 +67,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     const message = mForm.value.message
     this.session =true
     this.chatService.newMessage(message, localStorage.getItem('session_id'));
+    this.chatService.getMessages(localStorage.getItem('session_id'));
   }
 
   sessionExpire() {
@@ -74,5 +75,6 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     this.session = false;
     this.chatService.endSession(this.chatService.id);
     localStorage.removeItem('session_id');
+    this.activeModal.close();
   }
 }
