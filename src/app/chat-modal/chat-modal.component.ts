@@ -26,7 +26,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.add(
-      this.chatService.messagesChanged.subscribe((messages: Message[]) => {debugger
+      this.chatService.messagesChanged.subscribe((messages: Message[]) => {
         this.chatMessages = messages;
       })
     )
@@ -42,11 +42,8 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  
-
   onGetMessages() {
    this.messageSub = this.chatService.getMessages(this.id)
-   debugger
   }
 
   onCloseModal() {

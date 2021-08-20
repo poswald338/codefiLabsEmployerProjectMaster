@@ -53,14 +53,10 @@ export class ChatServiceService {
         token: this.key,
         session_id: id
       }
-    }).pipe(tap(response => {debugger
-      if(response.payload[0][0].user === 'web') {
-        response.payload[0][0].user = this.name
-      } else if(response.payload[0][0].user === 'slack') {
-        response.payload[0][0].user = 'Patrick'
-      }
+    }).pipe(tap(response => {
+      response.payload[0][0]
     }
-    )).subscribe((messages: any) => {debugger
+    )).subscribe((messages: any) => {
       if (messages.payload.length === this.messages.length) {
         return this.messages
       } else {
@@ -80,6 +76,7 @@ export class ChatServiceService {
       console.log(data)
     })
   }
+  
   endSession(session_id: any) {
     this.http.delete(this.url + 'end_session?token=' + this.key, {
       params: {

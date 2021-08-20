@@ -13,9 +13,7 @@
     <ul class="scroll">
       <app-message 
       *ngFor="let message of chatMessages"
-      [name]="message[0].user"
-      [text]="message[0].text"
-      [timestamp]="message[0].timestamp"></app-message>
+      [msg]="message"></app-message>
     </ul>
     <button (click)="onGetMessages()">Get</button>
 

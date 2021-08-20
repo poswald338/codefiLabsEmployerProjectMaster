@@ -6,13 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent implements OnInit {
-  @Input() name: string;
-  @Input() text: string;
-  @Input() timestamp: Date;
+  @Input() msg: any
 
   constructor() { }
 
   ngOnInit(): void {
+    this.msg = this.msg[0]
   }
 
 }
