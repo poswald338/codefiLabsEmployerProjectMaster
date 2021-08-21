@@ -1,6 +1,6 @@
 
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { interval, Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { ChatServiceService } from './chat-service.service';
   templateUrl: './chat-modal.component.html',
   styleUrls: ['./chat-modal.component.scss']
 })
-export class ChatModalComponent implements OnInit, OnDestroy {
+export class ChatModalComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -20,33 +20,41 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     private subs = new Subscription;
     chatMessages: Message[] = []
     session = false
+    sessiontest = true
     activeName = 'Patrick';
     data;
-    id = 12
+    id;
 
   ngOnInit(): void {
     this.subs.add(
       this.chatService.messagesChanged.subscribe((messages: Message[]) => {debugger
         this.chatMessages = messages;
+        this.startPolling()
       })
     )
   }
 
-  onSubmit(name, message) {
-    this.chatService.createSession(name, message)
+  // onSubmit(name, message) {
+  //   this.chatService.createSession(name, message)
+  // }
+
+  ngOnChanges() {
+    this.startPolling();
   }
-//add method inside ngOnChanges
+  
   startPolling() {
-    if (this.id) {
-      setInterval(() => { this.messageSub.unsubscribe(), this.onGetMessages }, 5000)
+    if (this.sessiontest) {debugger
+      // setInterval(() => { this.messageSub.unsubscribe(), this.onGetMessages }, 5000)
+      setInterval(() => { console.log('hi'), this.messageSub.unsubscribe(), this.onGetMessages() }, 5000)
     }
   }
 
-  
+  onGet() {
+    this.onGetMessages()
+  }
 
   onGetMessages() {
-   this.messageSub = this.chatService.getMessages(this.id)
-   debugger
+   this.messageSub = this.chatService.getMessages();
   }
 
   onCloseModal() {
@@ -55,13 +63,17 @@ export class ChatModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.unsubscribe();
+    this.messageSub.unsubscribe();
   }
 
-  onSubmitSessionForm(sForm: NgForm) {
-    console.log(sForm)
+  onSubmitSessionForm(sForm: NgForm) {debugger
     const name = sForm.value.name
     const message = sForm.value.message
+    this.chatService.createSession(name, message).subscribe(res => {
+      console.log(res)
+      })
     this.session = true
+    this.onGetMessages();
   }
 
   onSubmitMessageForm(mForm: NgForm) {

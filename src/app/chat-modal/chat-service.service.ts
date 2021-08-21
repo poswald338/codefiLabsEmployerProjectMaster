@@ -1,9 +1,9 @@
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http'
 import { environment } from 'environments/environment';
-import { tap } from 'rxjs/operators'
-import { Subject } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators'
+import { Subject, throwError } from 'rxjs';
 
 
 export interface SessionResponse {
@@ -26,41 +26,51 @@ export class ChatServiceService {
   messagesChanged = new Subject<Message[]>()
   url = `${environment.apiUrl}`
   key = `${environment.apiKey}`
-  name = 'John'
   id;
 
 // 'data' will be the information from form
-  createSession(name, message) {
+  createSession(name, message) {debugger
     return this.http.post<any>(this.url+'new_session?token='+this.key, {
-      //data.name and data.message will carry over from form
       name: name,
       message: message
-    }).pipe(tap(response => {
-      this.id = response.payload[0].session_id
-      localStorage.setItem('session_id', response.payload[0].session_id);
-    }
-    )).subscribe(response => {
-      console.log(response);
-    })
+    }).pipe(
+      // catchError(this.handleError),
+      tap(resData => {
+        this.id = resData.payload[0].session_id
+        localStorage.setItem('session_id', resData.payload[0].session_id);
+      })
+    )
+    // .pipe(tap((res: any) => {
+    //   console.log(res);
+    //   this.id = res.payload[0].session_id
+    //   localStorage.setItem('session_id', res.payload[0].session_id);
+    // }
+    // ))
   }
 
-  getMessages(id) {
+  private handleAuthentication(id) {debugger
+    localStorage.setItem('session_id', id);
+    this.id = id;
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred.';
+      if (!errorRes.error || !errorRes.error.error) {
+        return throwError(errorMessage);
+      }
+  }
+  
+
+  getMessages() {debugger
     //session_id to be replaced with key set in storage
-    // let id = localStorage.getItem('session_id');
+    let id = localStorage.getItem('session_id');
 
     return this.http.get<any>(this.url+'retrieve_messages?token='+this.key, {
       params: {
         token: this.key,
         session_id: id
       }
-    }).pipe(tap(response => {debugger
-      if(response.payload[0][0].user === 'web') {
-        response.payload[0][0].user = this.name
-      } else if(response.payload[0][0].user === 'slack') {
-        response.payload[0][0].user = 'Patrick'
-      }
-    }
-    )).subscribe((messages: any) => {debugger
+    }).subscribe((messages: any) => {debugger
       if (messages.payload.length === this.messages.length) {
         return this.messages
       } else {
