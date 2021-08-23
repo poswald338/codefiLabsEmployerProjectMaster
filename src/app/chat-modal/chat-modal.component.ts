@@ -26,18 +26,16 @@ export class ChatModalComponent implements OnInit, OnDestroy, OnChanges {
     interval;
 
   ngOnInit(): void {debugger
+    this.chatMessages = this.chatService.retrieveMessages()
     if(localStorage.getItem('session_id')) {
       this.id = localStorage.getItem('session_id');
       this.session = true
       this.onGetMessages(this.id)
-    } else {
-      return
     }
     this.messageChangedSub = this.chatService.messagesChanged.subscribe((messages: Message[]) => {
         this.chatMessages = messages;
         // this.startPolling()
       })
-    this.chatMessages = this.chatService.retrieveMessages()
     if (this.polling === false) {
       // this.startPolling();
     }
@@ -48,7 +46,7 @@ export class ChatModalComponent implements OnInit, OnDestroy, OnChanges {
   }
   
   startPolling() {
-    if (this.session) {
+    if (this.session) {debugger
       // setInterval(() => { console.log('hi'), this.messageSub.unsubscribe(), this.onGetMessages(this.id) }, 5000)
       this.interval = setInterval(() => { 
         console.log('hi')
@@ -67,7 +65,9 @@ export class ChatModalComponent implements OnInit, OnDestroy, OnChanges {
   onGetMessages(data) {
     console.log('gets hit')
     this.messageSub = this.chatService.getMessages(data);
-    this.startPolling()
+    if(this.polling === false){
+      this.startPolling()
+    }
   }
 
   onCloseModal() {
