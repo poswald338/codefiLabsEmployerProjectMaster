@@ -15,6 +15,7 @@ export interface SessionResponse {
   message?: string
 }
 
+
 @Injectable({providedIn: 'root'})
 export class ChatServiceService {
 
@@ -28,15 +29,20 @@ export class ChatServiceService {
   key = `${environment.apiKey}`
   id;
 
+  retrieveMessages() {
+    return this.messages.slice()
+  }
+
 // 'data' will be the information from form
-  createSession(name, message) {debugger
+  createSession(name, message) {
     return this.http.post<any>(this.url+'new_session?token='+this.key, {
       name: name,
       message: message
     }).pipe(
       // catchError(this.handleError),
-      tap(resData => {
+      tap((resData) => {
         this.id = resData.payload[0].session_id
+        console.log(this.id)
         localStorage.setItem('session_id', resData.payload[0].session_id);
       })
     )
@@ -48,7 +54,7 @@ export class ChatServiceService {
     // ))
   }
 
-  private handleAuthentication(id) {debugger
+  private handleAuthentication(id) {
     localStorage.setItem('session_id', id);
     this.id = id;
   }
@@ -61,16 +67,13 @@ export class ChatServiceService {
   }
   
 
-  getMessages() {debugger
-    //session_id to be replaced with key set in storage
-    let id = localStorage.getItem('session_id');
-
+  getMessages(sessionId) {
     return this.http.get<any>(this.url+'retrieve_messages?token='+this.key, {
       params: {
         token: this.key,
-        session_id: id
+        session_id: sessionId
       }
-    }).subscribe((messages: any) => {debugger
+    }).subscribe((messages: any) => {
       if (messages.payload.length === this.messages.length) {
         return this.messages
       } else {
