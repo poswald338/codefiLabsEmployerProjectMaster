@@ -33,7 +33,6 @@ export class ChatServiceService {
     return this.messages.slice()
   }
 
-// 'data' will be the information from form
   createSession(name, message) {
     return this.http.post<any>(this.url+'new_session?token='+this.key, {
       name: name,
@@ -46,26 +45,7 @@ export class ChatServiceService {
         localStorage.setItem('session_id', resData.payload[0].session_id);
       })
     )
-    // .pipe(tap((res: any) => {
-    //   console.log(res);
-    //   this.id = res.payload[0].session_id
-    //   localStorage.setItem('session_id', res.payload[0].session_id);
-    // }
-    // ))
-  }
-
-  private handleAuthentication(id) {
-    localStorage.setItem('session_id', id);
-    this.id = id;
-  }
-
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred.';
-      if (!errorRes.error || !errorRes.error.error) {
-        return throwError(errorMessage);
-      }
-  }
-  
+  }  
 
   getMessages(sessionId) {
     return this.http.get<any>(this.url+'retrieve_messages?token='+this.key, {
@@ -73,15 +53,9 @@ export class ChatServiceService {
         token: this.key,
         session_id: sessionId
       }
-    }).subscribe((messages: any) => {
-      if (messages.payload.length === this.messages.length) {
-        return this.messages
-      } else {
-        this.messages = messages.payload;
-        this.messagesChanged.next(this.messages.slice())        
-      }
-        console.log(this.messages);    
-      })
+    }).pipe(
+      catchError(this.handleError)
+    )
   }
 
   newMessage(message: string, session_id: any) {
@@ -99,5 +73,12 @@ export class ChatServiceService {
         session_id: this.id
       }
     });
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred.';
+      if (!errorRes.error || !errorRes.error.error) {
+        return throwError(errorMessage);
+      }
   }
 }
