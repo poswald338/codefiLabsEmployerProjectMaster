@@ -14,7 +14,6 @@
       [text]="message[0].text"
       [timestamp]="message[0].timestamp"></app-message>
     </ul>
-    <button (click)="onGetMessages()">Get</button>
   </div>
 
  <!--Face-->
@@ -23,8 +22,7 @@
   <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" 
        class="rounded-circle center">
     </div>
-<div > 
-  
+<div>
   <form (ngSubmit)="onSubmitSessionForm(sf)" #sf="ngForm">
     
     <div class="form-group">
