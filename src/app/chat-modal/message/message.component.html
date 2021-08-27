@@ -1,15 +1,9 @@
 <div class="commentArea">
     <div class="bubbledRight" *ngIf="msg.user === 'web'">
-        <li>
-            <p>{{msg.name}}</p>
-            <p>{{msg.text}}</p>
-            <p class="time">{{msg.timestamp}}</p>
-        </li>
+        <span>{{msg.text}}</span><br>
+        <span class="time">{{msg.timestamp | date:'shortTime'}}</span>
     </div>
     <div class="bubbledLeft" *ngIf="msg.user === 'slack'"> 
-        <li>
-            <p>{{msg.name}}</p>
-            <p>{{msg.text}}</p>
-            <p class="time">{{msg.timestamp}}</p>
-        </li>
+        <span>{{msg.text}}</span><br>
+        <span class="time">{{msg.timestamp | date:'shortTime'}}</span>
     </div>

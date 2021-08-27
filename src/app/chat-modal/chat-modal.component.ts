@@ -1,6 +1,6 @@
 
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -11,19 +11,21 @@ import { ChatServiceService } from './chat-service.service';
   templateUrl: './chat-modal.component.html',
   styleUrls: ['./chat-modal.component.scss']
 })
-export class ChatModalComponent implements OnInit, OnDestroy {
+export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef
   constructor(
     public activeModal: NgbActiveModal,
     public chatService: ChatServiceService) { }
-    private messageSub: Subscription
-    private subs = new Subscription;
-    chatMessages: Message[] = []
-    session: boolean = false
-    polling: boolean = false
-    id: number;
-    interval;
-    error: string = null;
+
+  private messageSub: Subscription
+  private subs = new Subscription;
+  chatMessages: Message[] = []
+  session: boolean = false
+  polling: boolean = false
+  id: number;
+  interval;
+  error: string = null;
 
   ngOnInit(): void {
     if(localStorage.getItem('session_id')) {
@@ -32,6 +34,10 @@ export class ChatModalComponent implements OnInit, OnDestroy {
       this.onGetMessages(this.id)
     }
   }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  } 
   
   startPolling() {
     if (this.session) {
@@ -77,14 +83,21 @@ export class ChatModalComponent implements OnInit, OnDestroy {
       } 
     ))
     this.session = true
+    sForm.reset();
   }
 
   onSubmitMessageForm(mForm: NgForm) {
     console.log(mForm)
     const message = mForm.value.message
     this.session=true
-    this.chatService.newMessage(message, localStorage.getItem('session_id'));
+    this.chatService.newMessage(message, this.id);
   }
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+}
 
   ngOnDestroy() {
     clearInterval(this.interval)
