@@ -83,6 +83,7 @@ export class ChatModalComponent implements OnInit, OnDestroy {
     console.log(mForm)
     const message = mForm.value.message
     this.session=true
+    this.chatService.newMessage(message, localStorage.getItem('session_id'));
   }
 
   ngOnDestroy() {

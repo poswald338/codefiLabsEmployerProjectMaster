@@ -61,7 +61,7 @@ export class ChatServiceService {
   newMessage(message: string, session_id: any) {
     return this.http.post(this.url + 'new_message?token=' + this.key, {
       message: message,
-      session_id: this.id
+      session_id: session_id
       }
     ).subscribe(data => {
       console.log(data)
