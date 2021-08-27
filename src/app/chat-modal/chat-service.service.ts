@@ -53,9 +53,21 @@ export class ChatServiceService {
         token: this.key,
         session_id: sessionId
       }
-    }).pipe(
-      catchError(this.handleError)
-    )
+    }).pipe(tap(response => {
+      response.payload[0][0]
+    }
+    )).subscribe((messages: any) => {
+      if (messages.payload.length === this.messages.length) {
+        return this.messages
+      } else {
+        this.messages = messages.payload;
+        this.messagesChanged.next(this.messages.slice())        
+      }
+        console.log(this.messages);    
+      })
+    // }).pipe(
+    //   catchError(this.handleError)
+    // )
   }
 
   newMessage(message: string, session_id: any) {
@@ -67,6 +79,7 @@ export class ChatServiceService {
       console.log(data)
     })
   }
+  
   endSession(session_id: any) {
     this.http.delete(this.url + 'end_session?token=' + this.key, {
       params: {
