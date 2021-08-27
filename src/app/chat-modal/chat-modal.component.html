@@ -10,32 +10,28 @@
 
   <!-- Here is for the response message thread -->
   <div class="modal-body" *ngIf="session">
-    <ul class="scroll">
+    <ul class="scroll" #scrollMe>
       <app-message 
       *ngFor="let message of chatMessages"
       [msg]="message"></app-message>
     </ul>
-    <button (click)="onGetMessages()">Get</button>
-
     <div *ngIf="session"> 
       <form (ngSubmit)="onSubmitMessageForm(mf)" #mf="ngForm">
         <div class="form-group">
-          <br>
-          <br>
-          <label for="message">Please Type Your Message</label>
+          <hr>
           <input 
             type="text" 
             class="form-control" 
             id="message" 
+            placeholder="New Message"
             required
             ngModel
             name="message">
         </div>
         <button 
+        [disabled]="!mf.valid"
         type="submit" 
-        class="btn btn-info"
-        style="background-color:#c58c8c
-        ; border-color:black; color:white; font-weight: bold;">Submit</button>
+        class="btn btn-info btn-msg-send">Send</button>
       </form>
     </div>
   <!-- <h4 class="modal-title">Hi there!</h4>
@@ -88,14 +84,14 @@
 
 
 <!-- Here is the footer -->
-<div class="modal-footer">
+<!-- <div class="modal-footer">
   <div 
     style="display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 2rem;">
   <button type="button" class="btn btn-outline-dark " (click)="activeModal.close('Close click')">Close</button></div>
-</div>
+</div> -->
 
 
 

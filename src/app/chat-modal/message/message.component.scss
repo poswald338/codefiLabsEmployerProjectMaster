@@ -25,7 +25,7 @@
     }
     
     .bubbledLeft:before {
-        border-bottom: 10px solid #65B045;
+        border-bottom: 10px solid #b4716f;
         border-left: 9px solid rgba(0, 0, 0, 0);
         position: absolute;
         bottom: 0;
@@ -47,12 +47,17 @@
     }
     
     .bubbledRight:before {
-        border-bottom: 9px solid #07D;
+        border-bottom: 9px solid #888888;
         border-right: 9px solid rgba(0, 0, 0, 0);
         position: absolute;
         bottom: 0;
         right: -8px;
         content: "";
+    }
+
+    .time {
+        text-align: right;
+        font-size: xx-small;
     }
 
 

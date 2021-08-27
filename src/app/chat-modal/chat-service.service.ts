@@ -53,21 +53,9 @@ export class ChatServiceService {
         token: this.key,
         session_id: sessionId
       }
-    }).pipe(tap(response => {
-      response.payload[0][0]
-    }
-    )).subscribe((messages: any) => {
-      if (messages.payload.length === this.messages.length) {
-        return this.messages
-      } else {
-        this.messages = messages.payload;
-        this.messagesChanged.next(this.messages.slice())        
-      }
-        console.log(this.messages);    
-      })
-    // }).pipe(
-    //   catchError(this.handleError)
-    // )
+    }).pipe(
+      catchError(this.handleError)
+    )
   }
 
   newMessage(message: string, session_id: any) {
@@ -77,13 +65,14 @@ export class ChatServiceService {
       }
     ).subscribe(data => {
       console.log(data)
+      this.getMessages(this.id)
     })
   }
   
   endSession(session_id: any) {
     this.http.delete(this.url + 'end_session?token=' + this.key, {
       params: {
-        session_id: this.id
+      session_id: this.id
       }
     });
   }
