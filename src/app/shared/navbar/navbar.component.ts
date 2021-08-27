@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
     const navbar: HTMLElement = this.element.nativeElement
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0]
   }
+  
   sidebarOpen() {
     const toggleButton = this.toggleButton
     const html = document.getElementsByTagName('html')[0]
