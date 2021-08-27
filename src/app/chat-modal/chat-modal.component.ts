@@ -93,6 +93,13 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.newMessage(message, this.id);
   }
 
+  sessionExpire() {
+    this.session = false;
+    this.chatService.endSession(this.chatService.id);
+    localStorage.removeItem('session_id');
+    this.activeModal.close();
+  }
+
   scrollToBottom(): void {
     try {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
