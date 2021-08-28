@@ -19,7 +19,9 @@ export class LandingPageComponent implements OnInit, OnDestroy, AfterViewInit {
      constructor(private modalService: NgbModal) {}
 
      open() {
-       const modalRef = this.modalService.open(ChatModalComponent);
+       const modalRef = this.modalService.open(ChatModalComponent, {
+           backdrop: 'static'           
+       });
      }
 
     ngOnInit() {

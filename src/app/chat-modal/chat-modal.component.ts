@@ -110,6 +110,8 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     clearInterval(this.interval)
     this.polling = false
     this.subs.unsubscribe();
-    this.messageSub.unsubscribe();
+    if(this.messageSub) {
+      this.messageSub.unsubscribe();
+    }
   }
 }
