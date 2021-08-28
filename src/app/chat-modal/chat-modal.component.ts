@@ -25,6 +25,7 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   polling: boolean = false
   id: number;
   interval;
+  timer;
   error: string = null;
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   onGetMessages(data) {
     console.log('gets hit')
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {this.sessionExpire()}, 600000);
     this.messageSub = this.chatService.getMessages(data)
     .subscribe((messages: any) => {
         this.chatMessages = messages.payload;    
@@ -70,7 +73,7 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     console.log('closed')
   }
 
-  onSubmitSessionForm(sForm: NgForm) {debugger
+  onSubmitSessionForm(sForm: NgForm) {
     const name = sForm.value.name
     const message = sForm.value.message
     this.subs.add(this.chatService.createSession(name, message).subscribe((res: any) => {
@@ -83,6 +86,9 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
       } 
     ))
     this.session = true
+    if(this.session) {
+      this.timer = setTimeout(() => {this.sessionExpire()}, 600000);
+    }
     sForm.reset();
   }
 
