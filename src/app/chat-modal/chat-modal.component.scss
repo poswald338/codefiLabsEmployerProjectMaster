@@ -67,6 +67,12 @@
 .form-control {
     border-width: medium;
     border-color: #bc7372; opacity: 0.7;
+       
+}
+
+::placeholder { 
+    color: black;
+    font-weight: thin;
 }
     // background-color: white; opacity: 0.8;
 
