@@ -61,7 +61,11 @@ export class ChatModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.timer = setTimeout(() => {this.sessionExpire()}, 600000);
     this.messageSub = this.chatService.getMessages(data)
     .subscribe((messages: any) => {
-        this.chatMessages = messages.payload;    
+        this.chatMessages = messages.payload;  
+          // if this.messageCount < messages.payload.length 
+          // this.messageCount = message.payload.length
+          // run scroll to bottom
+          // else do nothihng
       })
     if(this.polling === false){
       this.startPolling()
